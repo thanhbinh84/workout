@@ -17,6 +17,7 @@ class BaseController extends GetxController with StateMixin {
   error({String? error}) {
     if(error != null) {
       Utils.errorToast(error);
+      print(error);
     }
     change(null, status: RxStatus.error());
   }

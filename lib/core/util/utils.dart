@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class Utils {
   static toast(dynamic str) {
@@ -21,10 +23,15 @@ class Utils {
         fontSize: 13.0);
   }
 
-  handleError(dynamic e, {StackTrace? s, String? description, bool shouldToast = false}) async {
-    String msg = e is DioException ? e.message??'Unknown Dio Exception' : e.toString();
-    if (shouldToast) toast(msg);
+  static Future<Map<String, dynamic>> parseJsonFromAssets(String assetsPath) async {
+    return rootBundle.loadString(assetsPath)
+        .then((jsonStr) => jsonDecode(jsonStr));
+  }
+
+  static handleError(dynamic e, {StackTrace? s}) async {
+    if (kDebugMode) {
+      print(s);
+    }
+    errorToast(e.toString());
   }
 }
-
-final utils = Utils();
