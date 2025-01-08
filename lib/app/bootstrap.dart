@@ -5,12 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:workout/app/app.dart';
-import 'package:workout/auth/login_controller.dart';
 import 'package:workout/core/config/firebase_options.dart';
 import 'package:workout/core/repository/user_repository.dart';
 import 'package:workout/core/repository/workout_repository.dart';
 import 'package:workout/core/util/utils.dart';
-import 'package:workout/dashboard/dashboard_controller.dart';
 
 void bootstrap() async {
   runZonedGuarded(() async {
@@ -31,6 +29,4 @@ _initFirebaseServices() async {
 _initAppServices() async {
   Get.put(UserRepository(), permanent: true);
   Get.put(WorkoutRepository(), permanent: true);
-  Get.lazyPut(() => LoginController());
-  Get.lazyPut(() => DashboardController());
 }

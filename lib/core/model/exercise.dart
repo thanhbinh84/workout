@@ -9,7 +9,7 @@ class Exercise {
   static const keyWeight = 'weight';
   static const keyReps = 'reps';
 
-  Exercise(this.name, this.sets, this.weight, this.reps);
+  Exercise({this.name ='', this.sets = 0, this.weight = 0, this.reps = 0});
 
   Exercise.fromJson(Map<String, dynamic> map) {
     name = map[keyName];

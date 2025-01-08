@@ -52,7 +52,7 @@ class DashboardScreen extends GetView<DashboardController> {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text('Exercise ${exercises[index].name}'),
-              onTap: () => Utils.toast('selected'),
+              onTap: () => controller.selectExercise(exercises[index]),
             );
           },
 

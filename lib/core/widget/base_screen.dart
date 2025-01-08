@@ -8,14 +8,14 @@ class BaseScreen extends StatelessWidget {
   final bool resizeToAvoidBottomPadding;
   final Future<bool>? onWillPop;
   final BaseController? controller;
-  final String? title;
+  final String title;
 
   const BaseScreen(this.body,
       {super.key,
       this.controller,
       this.resizeToAvoidBottomPadding = false,
       this.onWillPop,
-      this.title});
+      this.title = 'Workout App'});
 
   @override
   Widget build(BuildContext context) {
@@ -44,5 +44,5 @@ class BaseScreen extends StatelessWidget {
   get _child =>
       Scaffold(resizeToAvoidBottomInset: resizeToAvoidBottomPadding, appBar: _appBar, body: SafeArea(child: body));
 
-  get _appBar => title == null ? null : AppBar(title: Text(title!), backgroundColor: Colors.black12,);
+  get _appBar => AppBar(title: Text(title), backgroundColor: Colors.black12);
 }
