@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:workout/core/util/utils.dart';
 
@@ -17,7 +18,9 @@ class BaseController extends GetxController with StateMixin {
   error({String? error}) {
     if(error != null) {
       Utils.errorToast(error);
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
     change(null, status: RxStatus.error());
   }

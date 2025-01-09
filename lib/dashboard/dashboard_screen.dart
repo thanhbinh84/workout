@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:workout/core/model/plan.dart';
 import 'package:workout/core/util/text_styles.dart';
-import 'package:workout/core/util/utils.dart';
 import 'package:workout/core/widget/base_screen.dart';
 import 'package:workout/dashboard/dashboard_controller.dart';
 
@@ -35,9 +34,7 @@ class DashboardScreen extends GetView<DashboardController> {
             TextSpan(text: '${plan.duration}\n\n', style: TextStyles.bodyBold),
             const TextSpan(text: 'Category: ', style: TextStyles.body),
             TextSpan(text: plan.category, style: TextStyles.bodyBold),
-            const TextSpan(
-                text: '\n\n-----------------------\n\nPlease choose one of exercises below:\n\n',
-                style: TextStyles.body),
+            const TextSpan(text: '\n\nPlease select exercise:\n\n', style: TextStyles.body),
           ]));
     });
   }
@@ -51,11 +48,10 @@ class DashboardScreen extends GetView<DashboardController> {
           itemCount: exercises.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text('Exercise ${exercises[index].name}'),
+              title: Text(exercises[index].name, textAlign: TextAlign.center),
               onTap: () => controller.selectExercise(exercises[index]),
             );
           },
-
           separatorBuilder: (BuildContext context, int index) => const Divider(),
         ),
       );

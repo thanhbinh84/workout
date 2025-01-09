@@ -36,7 +36,7 @@ class BaseScreen extends StatelessWidget {
         color: Colors.black54,
         child: Center(
           child: SpinKitDoubleBounce(
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white.withAlpha(80),
           ),
         ),
       ));
