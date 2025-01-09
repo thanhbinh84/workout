@@ -9,11 +9,24 @@ class ExerciseController extends BaseController {
   static ExerciseController get to => Get.find();
   final WorkoutRepository workoutRepository = Get.find<WorkoutRepository>();
   final exercise = Exercise().obs;
+  Workout? workout;
+  final hasSavedWorkout = false.obs;
 
   @override
   onInit() {
     super.onInit();
-    _getExercise();
+    _loadData();
+  }
+
+  void _loadData() async {
+    try {
+      loading();
+      _getExercise();
+      await _getWorkout();
+      success();
+    } catch (e) {
+      error();
+    }
   }
 
   _getExercise() {
@@ -21,16 +34,17 @@ class ExerciseController extends BaseController {
     exercise.refresh();
   }
 
+  _getWorkout() async {
+    workout = await workoutRepository.getSavedWorkoutForExercise(exercise.value.name);
+    hasSavedWorkout.value = workout != null;
+  }
+
   startWorkout() async {
-    try {
-      Workout workout = Workout(
+    workout ??= Workout(
           sets: 1,
           weight: exercise.value.weight,
           reps: exercise.value.reps,
           exercise: exercise.value);
-      Get.offNamed(Routes.workout, arguments: workout);
-    } catch (e) {
-      error(error: e.toString());
-    }
+    Get.offNamed(Routes.workout, arguments: workout);
   }
 }

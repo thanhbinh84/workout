@@ -7,6 +7,8 @@ import 'package:workout/core/util/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WorkoutRepository extends GetxService {
+  static const keyFirebaseUsersCollection = 'users';
+
   Plan? plan;
 
   Future<Plan> getPlan() async {
@@ -22,9 +24,24 @@ class WorkoutRepository extends GetxService {
     return exercise.firstWhere((e) => e.name == name);
   }
 
+  Future<Workout?> getSavedWorkoutForExercise(String exerciseName) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final docRef = FirebaseFirestore.instance.collection(keyFirebaseUsersCollection).doc(uid);
+    final data = (await docRef.get()).data();
+    if (data != null && data[Workout.keyExerciseName] == exerciseName) {
+      Exercise exercise = await getExercise(exerciseName);
+      return Workout.fromJson(data, exercise);
+    }
+    return null;
+  }
+
   void saveWorkout(Workout workout) async {
     final db = FirebaseFirestore.instance;
     final uid = FirebaseAuth.instance.currentUser?.uid;
-    db.collection("users").doc(uid).set(workout.toJson()).onError((e, _) => throw Exception(e));
+    db
+        .collection(keyFirebaseUsersCollection)
+        .doc(uid)
+        .set(workout.toJson())
+        .onError((e, _) => throw Exception(e));
   }
 }

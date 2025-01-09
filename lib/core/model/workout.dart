@@ -31,4 +31,13 @@ class Workout {
         keyReps: reps,
         keyExerciseName: exercise.name
       };
+
+  factory Workout.fromJson(Map<String, dynamic> map, Exercise exercise) {
+    return Workout(
+      sets: map[keySets],
+      weight: map[keyWeight],
+      reps: map[keyReps],
+      exercise: exercise,
+    );
+  }
 }

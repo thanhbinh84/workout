@@ -17,7 +17,7 @@ class ExerciseScreen extends GetView<ExerciseController> {
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_exerciseView, _startButton],
+            children: [_exerciseView, _startButton, _resumeButton],
           ),
         ));
   }
@@ -40,8 +40,17 @@ class ExerciseScreen extends GetView<ExerciseController> {
   }
 
   get _startButton => Container(
-    padding: const EdgeInsets.all(20),
-    alignment: Alignment.center,
-    child: ElevatedButton(onPressed: () => controller.startWorkout(), child: const Text('Start now')),
-  );
+        padding: const EdgeInsets.all(20),
+        alignment: Alignment.center,
+        child: ElevatedButton(
+            onPressed: () => controller.startWorkout(), child: const Text('Start new workout')),
+      );
+
+  get _resumeButton => Obx(() => controller.hasSavedWorkout.value
+      ? Container(
+          padding: const EdgeInsets.all(20),
+          alignment: Alignment.center,
+          child: ElevatedButton(
+              onPressed: () => controller.startWorkout(), child: const Text('Resume last workout')),
+        ): Container());
 }
