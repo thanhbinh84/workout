@@ -16,7 +16,13 @@ class WorkoutScreen extends GetView<WorkoutController> {
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_weightInputView, _repsInputView, _oneRepMaxView, _buttons(context)],
+            children: [
+              _weightInputView,
+              _repsInputView,
+              _oneRepMaxView,
+              _saveButton,
+              _breakButton(context)
+            ],
           ),
         )));
   }
@@ -56,15 +62,21 @@ class WorkoutScreen extends GetView<WorkoutController> {
     });
   }
 
-  _buttons(context) {
-    return controller.workout.value.isLastSet ? _finishButton : _breakButton(context);
-  }
-
-  _breakButton(context) => Container(
+  get _saveButton => Container(
         padding: const EdgeInsets.all(20),
         alignment: Alignment.center,
-        child: ElevatedButton(onPressed: () => _breakNow(context), child: const Text('Break now')),
+        child: ElevatedButton(
+            onPressed: () => controller.saveAndQuit(), child: const Text('Save & quit')),
       );
+
+  _breakButton(context) => controller.workout.value.isLastSet
+      ? _finishButton
+      : Container(
+          padding: const EdgeInsets.all(20),
+          alignment: Alignment.center,
+          child:
+              ElevatedButton(onPressed: () => _breakNow(context), child: const Text('Break now')),
+        );
 
   _breakNow(context) async {
     controller.breakNow();

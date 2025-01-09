@@ -19,4 +19,16 @@ class Workout {
   get setDisplay => '$sets/${exercise.sets}';
 
   bool get isLastSet => sets == exercise.sets;
+
+  static const keySets = 'sets';
+  static const keyWeight = 'weight';
+  static const keyReps = 'reps';
+  static const keyExerciseName = 'exerciseName';
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        keySets: sets,
+        keyWeight: weight,
+        keyReps: reps,
+        keyExerciseName: exercise.name
+      };
 }

@@ -69,4 +69,9 @@ class WorkoutController extends BaseController {
     _timer?.cancel();
     super.onClose();
   }
+
+  saveAndQuit() {
+    workoutRepository.saveWorkout(workout.value);
+    Get.back();
+  }
 }
