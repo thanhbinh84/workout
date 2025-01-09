@@ -66,14 +66,14 @@ class WorkoutScreen extends GetView<WorkoutController> {
         child: ElevatedButton(onPressed: () => _breakNow(context), child: const Text('Break now')),
       );
 
-  _breakNow(context) {
+  _breakNow(context) async {
     controller.breakNow();
-    showDialog(
+    await showDialog(
         context: context,
-        barrierDismissible: false,
         builder: (_) => AlertDialog(
             title: const Text('Break now'),
             content: Obx(() => Text('Go to next set in: ${controller.counter.value}s'))));
+    controller.cancelBreak();
   }
 
   get _finishButton => Container(

@@ -45,7 +45,6 @@ class WorkoutController extends BaseController {
       const Duration(seconds: 1),
       (Timer timer) {
         if (counter.value == 1) {
-          timer.cancel();
           Get.back();
           workout.value.sets++;
           workout.refresh();
@@ -55,6 +54,10 @@ class WorkoutController extends BaseController {
         }
       },
     );
+  }
+
+  cancelBreak() {
+    _timer?.cancel();
   }
 
   finishWorkout() {
