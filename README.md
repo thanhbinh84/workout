@@ -2,18 +2,21 @@
 
 A workout project.
 
-## Getting Started
+### Project structure
 
-This project is a starting point for a Flutter application.
+MVVM pattern is applied with VM is GetxController (GetX) and folders are grouped by features
+Architecture: https://bloclibrary.dev/architecture/
+State Management: https://pub.dev/packages/get
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+feature (e.g auth)
+|__ controllers
+|__ screens
+core
+|__ controller [base controller]
+|__ model  [shared model]
+|__ repository
+|__ util
+|__ widget  [shared widget]
 
 ## Notes: 
 
