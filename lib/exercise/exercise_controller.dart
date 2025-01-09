@@ -39,12 +39,16 @@ class ExerciseController extends BaseController {
     hasSavedWorkout.value = workout != null;
   }
 
-  startWorkout() async {
-    workout ??= Workout(
-          sets: 1,
-          weight: exercise.value.weight,
-          reps: exercise.value.reps,
-          exercise: exercise.value);
+  startWorkout() {
+    final newWorkout = Workout(
+        sets: 1,
+        weight: exercise.value.weight,
+        reps: exercise.value.reps,
+        exercise: exercise.value);
+    Get.offNamed(Routes.workout, arguments: newWorkout);
+  }
+
+  resumeWorkout() {
     Get.offNamed(Routes.workout, arguments: workout);
   }
 }

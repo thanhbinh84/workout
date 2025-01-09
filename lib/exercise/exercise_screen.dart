@@ -51,6 +51,6 @@ class ExerciseScreen extends GetView<ExerciseController> {
           padding: const EdgeInsets.all(20),
           alignment: Alignment.center,
           child: ElevatedButton(
-              onPressed: () => controller.startWorkout(), child: const Text('Resume last workout')),
+              onPressed: () => controller.resumeWorkout(), child: const Text('Resume last workout')),
         ): Container());
 }
