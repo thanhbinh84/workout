@@ -9,16 +9,16 @@ class WorkoutScreen extends GetView<WorkoutController> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
+    return Obx(() => BaseScreen(
         title: 'Set ${controller.workout.value.setDisplay}',
         controller: controller,
         Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_weightInputView, _repsInputView, _oneRepMaxView, _breakButton],
+            children: [_weightInputView, _repsInputView, _oneRepMaxView, _buttons(context)],
           ),
-        ));
+        )));
   }
 
   get _weightInputView => TextFormField(
@@ -32,17 +32,17 @@ class WorkoutScreen extends GetView<WorkoutController> {
       );
 
   get _repsInputView => Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: TextFormField(
-      initialValue: controller.workout.value.reps.toString(),
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'Repetitions',
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (value) => controller.updateWeightRepsValue(reps: value),
-    ),
-  );
+        padding: const EdgeInsets.only(top: 20),
+        child: TextFormField(
+          initialValue: controller.workout.value.reps.toString(),
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Repetitions',
+          ),
+          keyboardType: TextInputType.number,
+          onChanged: (value) => controller.updateWeightRepsValue(reps: value),
+        ),
+      );
 
   get _oneRepMaxView {
     return Obx(() {
@@ -56,9 +56,30 @@ class WorkoutScreen extends GetView<WorkoutController> {
     });
   }
 
-  get _breakButton => Container(
+  _buttons(context) {
+    return controller.workout.value.isLastSet ? _finishButton : _breakButton(context);
+  }
+
+  _breakButton(context) => Container(
         padding: const EdgeInsets.all(20),
         alignment: Alignment.center,
-        child: ElevatedButton(onPressed: () => print('ok'), child: const Text('Break now')),
+        child: ElevatedButton(onPressed: () => _breakNow(context), child: const Text('Break now')),
+      );
+
+  _breakNow(context) {
+    controller.breakNow();
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AlertDialog(
+            title: const Text('Break now'),
+            content: Obx(() => Text('Go to next set in: ${controller.counter.value}s'))));
+  }
+
+  get _finishButton => Container(
+        padding: const EdgeInsets.all(20),
+        alignment: Alignment.center,
+        child: ElevatedButton(
+            onPressed: () => controller.finishWorkout(), child: const Text('Finish')),
       );
 }

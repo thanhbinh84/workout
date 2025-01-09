@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:workout/core/controller/base_controller.dart';
 import 'package:workout/core/model/workout.dart';
@@ -7,6 +9,7 @@ class WorkoutController extends BaseController {
   static WorkoutController get to => Get.find();
   final WorkoutRepository workoutRepository = Get.find<WorkoutRepository>();
   late Rx<Workout> workout;
+  final counter = 0.obs;
 
   @override
   onInit() {
@@ -31,5 +34,36 @@ class WorkoutController extends BaseController {
     } catch (e) {
       error(error: e.toString());
     }
+  }
+
+  Timer? _timer;
+
+  breakNow() {
+    counter.value = workout.value.exercise.breakSecond;
+    counter.value = 5;
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        if (counter.value == 1) {
+          timer.cancel();
+          Get.back();
+          workout.value.sets++;
+          workout.refresh();
+        } else {
+          counter.value--;
+          counter.refresh();
+        }
+      },
+    );
+  }
+
+  finishWorkout() {
+    Get.back();
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
   }
 }

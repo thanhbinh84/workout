@@ -17,4 +17,6 @@ class Workout {
   }
 
   get setDisplay => '$sets/${exercise.sets}';
+
+  bool get isLastSet => sets == exercise.sets;
 }
